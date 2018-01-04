@@ -1,6 +1,28 @@
 // Notification object
 var Notification = window.Notification || window.webkitNotification
 
+const onerror = function onerror (event) {
+}
+
+const onclick = function onclick (event) {
+  event.preventDefault()
+  window.focus()
+  event.target.close()
+}
+
+const onclose = function onclose (event) {
+}
+
+const onshow = function onshow (event) {
+}
+
+const defaultEvents = {
+  onerror: onerror,
+  onclick: onclick,
+  onclose: onclose,
+  onshow: onshow
+}
+
 // Plugin
 const VueNativeNotification = {
   install: function (Vue, options) {
@@ -18,7 +40,12 @@ const VueNativeNotification = {
     Vue.prototype.$notification.requestPermission = requestPermission
 
     // Show function
-    var show = function (title, opts) {
+    var show = function (title, opts, {
+      onerror = defaultEvents.onerror,
+      onclick = defaultEvents.onclick,
+      onclose = defaultEvents.onclose,
+      onshow = defaultEvents.onshow
+        }) {
       return Promise.resolve()
         .then(function () {
           if (options.requestOnNotify && Notification.permission !== 'granted') {
@@ -35,7 +62,38 @@ const VueNativeNotification = {
           }
 
           // Create Notification object
-          return new Notification(title, opts)
+          const notification = new Notification(title, opts)
+
+          const bindOnError = function (event) {
+            'use strict'
+            defaultEvents.onerror(event)
+            onerror(event)
+          }
+
+          const bindOnClick = function (event) {
+            'use strict'
+            defaultEvents.onclick(event)
+            onclick(event)
+          }
+
+          const bindOnClose = function (event) {
+            'use strict'
+            defaultEvents.onclose(event)
+            onclose(event)
+          }
+
+          const bindOnShow = function (event) {
+            'use strict'
+            defaultEvents.onshow(event)
+            onshow(event)
+          }
+
+          notification.onerror = bindOnError
+          notification.onclick = bindOnClick
+          notification.onclose = bindOnClose
+          notification.onshow = bindOnShow
+
+          return notification
         })
     }
     Vue.notification.show = show
