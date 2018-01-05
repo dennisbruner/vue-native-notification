@@ -45,7 +45,7 @@ const VueNativeNotification = {
 
     // Show function
     var show = function (title, opts, {
-            onerror = function () { },
+      onerror = function () { },
       onclick = function () { },
       onclose = function () { },
       onshow = function () { }
