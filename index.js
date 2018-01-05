@@ -2,18 +2,22 @@
 var Notification = window.Notification || window.webkitNotification
 
 const onerror = function onerror (event) {
+  // console.log('On error event was called')
 }
 
 const onclick = function onclick (event) {
+  // console.log('On click event was called')
   event.preventDefault()
   window.focus()
   event.target.close()
 }
 
 const onclose = function onclose (event) {
+  // console.log('On close event was called')
 }
 
 const onshow = function onshow (event) {
+  // console.log('On show event was called')
 }
 
 const defaultEvents = {
@@ -41,10 +45,10 @@ const VueNativeNotification = {
 
     // Show function
     var show = function (title, opts, {
-      onerror = defaultEvents.onerror,
-      onclick = defaultEvents.onclick,
-      onclose = defaultEvents.onclose,
-      onshow = defaultEvents.onshow
+            onerror = function () { },
+      onclick = function () { },
+      onclose = function () { },
+      onshow = function () { }
         }) {
       return Promise.resolve()
         .then(function () {
@@ -67,25 +71,25 @@ const VueNativeNotification = {
           const bindOnError = function (event) {
             'use strict'
             defaultEvents.onerror(event)
-            onerror(event)
+            onerror()
           }
 
           const bindOnClick = function (event) {
             'use strict'
             defaultEvents.onclick(event)
-            onclick(event)
+            onclick()
           }
 
           const bindOnClose = function (event) {
             'use strict'
             defaultEvents.onclose(event)
-            onclose(event)
+            onclose()
           }
 
           const bindOnShow = function (event) {
             'use strict'
             defaultEvents.onshow(event)
-            onshow(event)
+            onshow()
           }
 
           notification.onerror = bindOnError

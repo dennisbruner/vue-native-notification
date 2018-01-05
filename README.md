@@ -37,7 +37,7 @@ export default {
       // https://developer.mozilla.org/en-US/docs/Web/API/Notification/Notification#Parameters
       this.$notification.show('Hello World', {
         body: 'This is an example!'
-      })
+      }, {})
     }
   }
 }
@@ -59,6 +59,62 @@ Vue.notification.requestPermission()
 // Component
 this.$notification.requestPermission()
   .then(console.log)
+```
+
+### Events
+
+https://developer.mozilla.org/en-US/docs/Web/API/Notification
+
+We now supports all notifications events
+
+#### onerror
+
+https://developer.mozilla.org/en-US/docs/Web/API/Notification/onerror
+
+Is an empty function. Nothing will be executed
+
+#### onclick
+
+https://developer.mozilla.org/en-US/docs/Web/API/Notification/onclick
+
+When notification is clicked, we set the focus on the context browser and close the notification
+
+#### onclose
+
+https://developer.mozilla.org/en-US/docs/Web/API/Notification/onclose
+
+Is an empty function. Nothing will be executed
+
+#### onshow
+
+https://developer.mozilla.org/en-US/docs/Web/API/Notification/onshow
+
+Is an empty function. Nothing will be executed
+
+#### Usage
+
+```javascript
+const notification = {
+  title: 'Your title',
+  options: {
+    body: 'This is an example!'
+  },
+  events: {
+    onerror: function () {
+        console.log('Custom error event was called');
+    },
+    onclick: function () {
+        console.log('Custom click event was called');
+    },
+    onclose: function () {
+        console.log('Custom close event was called');
+    },
+    onshow: function () {
+        console.log('Custom show event was called');
+    }
+  }
+}
+this.$notification.show(notification.title, notification.options, notification.events)
 ```
 
 ## License
