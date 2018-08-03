@@ -44,12 +44,11 @@ const VueNativeNotification = {
     Vue.prototype.$notification.requestPermission = requestPermission
 
     // Show function
-    var show = function (title, opts, {
-      onerror = function () { },
-      onclick = function () { },
-      onclose = function () { },
-      onshow = function () { }
-        }) {
+    var show = function (title, opts, e) {
+      e.onerror = function () { }
+      e.onclick = function () { }
+      e.onclose = function () { }
+      e.onshow = function () { }
       return Promise.resolve()
         .then(function () {
           if (options.requestOnNotify && Notification.permission !== 'granted') {
