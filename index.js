@@ -64,8 +64,6 @@ const VueNativeNotification = {
             return new Error('No permission to show notification')
           }
 
-          // Create Notification object
-          const notification = new Notification(title, opts)
 
           const bindOnError = function (event) {
             'use strict'
@@ -91,12 +89,23 @@ const VueNativeNotification = {
             onshow()
           }
 
-          notification.onerror = bindOnError
-          notification.onclick = bindOnClick
-          notification.onclose = bindOnClose
-          notification.onshow = bindOnShow
+          // Create Notification object
+          try {
+            const notification = new Notification(title, opts)
 
-          return notification
+            notification.onerror = bindOnError
+            notification.onclick = bindOnClick
+            notification.onclose = bindOnClose
+            notification.onshow = bindOnShow
+
+            return notification
+          } catch (e) {
+            if (e.name !== 'TypeError')
+              return e
+
+            return navigator.serviceWorker.ready.then(reg => reg.showNotification(title, opts))
+              .then(bindOnShow, bindOnError)
+          }
         })
     }
     Vue.notification.show = show
