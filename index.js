@@ -103,8 +103,10 @@ const VueNativeNotification = {
             if (e.name !== 'TypeError')
               return e
 
-            return navigator.serviceWorker.ready.then(reg => reg.showNotification(title, opts))
-              .then(bindOnShow, bindOnError)
+            return navigator.serviceWorker.ready.then(
+              function (reg) {
+                reg.showNotification(title, opts)
+              }).then(bindOnShow, bindOnError)
           }
         })
     }
