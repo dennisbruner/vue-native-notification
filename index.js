@@ -45,10 +45,10 @@ const VueNativeNotification = {
 
     // Show function
     var show = function (title, opts, e) {
-      e.onerror = function () { }
-      e.onclick = function () { }
-      e.onclose = function () { }
-      e.onshow = function () { }
+      if (!e.onerror) e.onerror = function () { }
+      if (!e.onclick) e.onclick = function () { }
+      if (!e.onclose) e.onclose = function () { }
+      if (!e.onshow) e.onshow = function () { }
       return Promise.resolve()
         .then(function () {
           if (options.requestOnNotify && Notification.permission !== 'granted') {
@@ -68,25 +68,25 @@ const VueNativeNotification = {
           const bindOnError = function (event) {
             'use strict'
             defaultEvents.onerror(event)
-            onerror()
+            e.onerror(event)
           }
 
           const bindOnClick = function (event) {
             'use strict'
             defaultEvents.onclick(event)
-            onclick()
+            e.onclick(event)
           }
 
           const bindOnClose = function (event) {
             'use strict'
             defaultEvents.onclose(event)
-            onclose()
+            e.onclose(event)
           }
 
           const bindOnShow = function (event) {
             'use strict'
             defaultEvents.onshow(event)
-            onshow()
+            e.onshow(event)
           }
 
           // Create Notification object
