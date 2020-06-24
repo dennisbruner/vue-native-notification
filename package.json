@@ -22,7 +22,7 @@
   "devDependencies": {
     "babel-preset-env": "^1.6.0",
     "babelify": "^7.3.0",
-    "browserify": "^14.4.0",
+    "browserify": "^14.5.0",
     "standard": "*",
     "uglify-js": "^3.0.28"
   }
