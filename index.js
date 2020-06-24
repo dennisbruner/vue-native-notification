@@ -64,7 +64,6 @@ const VueNativeNotification = {
             return new Error('No permission to show notification')
           }
 
-
           const bindOnError = function (event) {
             'use strict'
             defaultEvents.onerror(event)
@@ -100,8 +99,9 @@ const VueNativeNotification = {
 
             return notification
           } catch (e) {
-            if (e.name !== 'TypeError')
+            if (e.name !== 'TypeError') {
               return e
+            }
 
             return navigator.serviceWorker.ready.then(
               function (reg) {
