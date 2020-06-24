@@ -1,6 +1,6 @@
 {
   "name": "vue-native-notification",
-  "version": "1.0.5",
+  "version": "1.1.1",
   "description": "Vue.js plugin for native notifications",
   "main": "index.js",
   "repository": "https://github.com/dennisbruner/vue-native-notification.git",
